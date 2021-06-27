@@ -3,15 +3,19 @@ from ursina import *
 import random
 
 random_generator = random.Random()
-
+texoffset = 0.0
 
 def update():
     for entity in cubes:
-        entity.rotation_y += time.dt * 100
+        entity.rotation_y += time.dt * 5
     if held_keys['q']:
         camera.position += (0, time.dt, 0)
     if held_keys['a']:
         camera.position -= (0, time.dt, 0)
+    
+    global texoffset
+    texoffset += time.dt * 0.2
+    setattr(cube, "texture_offset", (0, texoffset))
 
 def input(key):
     if key == 'space':
@@ -43,7 +47,7 @@ window.exit_button.visible = False
 window.fps_counter.enabled = True
 
 cubes = []
-cube = Entity(model='cube', color=color.white, scale= (2,2,2), texture="crate")
+cube = Entity(model='cube', color=color.white, scale= (2,6,2), texture="water")
 cubes.append(cube)
 
 app.run() 
